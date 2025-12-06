@@ -1,6 +1,6 @@
 import 'package:app_flutter/about_page.dart';
 import 'package:app_flutter/home.dart';
-import 'package:app_flutter/home_page.dart' hide HomePage;
+
 import 'package:app_flutter/profile_page.dart';
 import 'package:flutter/material.dart';
 
