@@ -1,3 +1,4 @@
+import 'package:app_flutter/crudsqllite/screens/user_list.dart';
 import 'package:app_flutter/home_page.dart';
 import 'package:app_flutter/page1.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
       darkTheme: ThemeData(primarySwatch: Colors.deepPurple),
-      home: Youtude(),
+      // home: Youtude(),
+      home: UserList(),
     );
   }
 }

@@ -56,9 +56,15 @@ class Ecompractice extends StatelessWidget {
                   children: [
                     ElevatedButton(onPressed: () {}, child: const Text("All")),
                     const SizedBox(width: 10),
-                    ElevatedButton(onPressed: () {}, child: const Text("Shoes")),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text("Shoes"),
+                    ),
                     const SizedBox(width: 10),
-                    ElevatedButton(onPressed: () {}, child: const Text("Watch")),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text("Watch"),
+                    ),
                     const SizedBox(width: 10),
                     ElevatedButton(onPressed: () {}, child: const Text("Bag")),
                   ],
@@ -99,7 +105,7 @@ class Ecompractice extends StatelessWidget {
                         children: [
                           Image.network(
                             product['image']!,
-                            height: 100,
+                            height: 120,
                             width: double.infinity,
                             fit: BoxFit.cover,
                           ),
@@ -111,7 +117,8 @@ class Ecompractice extends StatelessWidget {
                               fontSize: 16,
                             ),
                           ),
-                          const SizedBox(height: 15),
+                          const SizedBox(height: 20),
+                          Spacer(),
                           ElevatedButton(
                             onPressed: () {},
                             child: const Text("Add to Cart"),
