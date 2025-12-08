@@ -208,6 +208,7 @@ class _UserListState extends State<UserList> {
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
+      
       body: Column(
         children: [
           // Search Bar
@@ -425,47 +426,53 @@ class _UserListState extends State<UserList> {
                 width: 1.5,
               ),
             ),
-            child: Stack(
-              children: [
-                // Active/Inactive badge
-                Positioned(
-                  top: 16,
-                  right: 16,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: user.isActive ? Colors.green[50] : Colors.red[50],
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: user.isActive ? Colors.green : Colors.red,
-                        width: 1,
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          user.isActive ? Icons.check_circle : Icons.cancel,
-                          size: 12,
-                          color: user.isActive ? Colors.green : Colors.red,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          user.isActive ? 'Active' : 'Inactive',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                            color: user.isActive ? Colors.green[800] : Colors.red[800],
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Header with Active/Inactive badge
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Active/Inactive badge
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: user.isActive ? Colors.green[50] : Colors.red[50],
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: user.isActive ? Colors.green : Colors.red,
+                            width: 1,
                           ),
                         ),
-                      ],
-                    ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              user.isActive ? Icons.check_circle : Icons.cancel,
+                              size: 12,
+                              color: user.isActive ? Colors.green : Colors.red,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              user.isActive ? 'Active' : 'Inactive',
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: user.isActive ? Colors.green[800] : Colors.red[800],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ),
 
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
+                  const SizedBox(height: 16),
+
+                  // User Info with Avatar
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Avatar
@@ -495,7 +502,7 @@ class _UserListState extends State<UserList> {
                       ),
                       const SizedBox(width: 16),
 
-                      // User Info
+                      // User Details
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -503,12 +510,12 @@ class _UserListState extends State<UserList> {
                             Text(
                               user.name,
                               style: const TextStyle(
-                                fontSize: 18,
+                                fontSize: 25,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black87,
                               ),
                             ),
-                            const SizedBox(height: 4),
+                            const SizedBox(height: 8),
                             Row(
                               children: [
                                 Icon(
@@ -556,32 +563,85 @@ class _UserListState extends State<UserList> {
                       ),
                     ],
                   ),
-                ),
-                
-                // Action Buttons
-                Positioned(
-                  bottom: 16,
-                  right: 16,
-                  child: Row(
-                    
+
+                  const SizedBox(height: 16),
+
+                  // Action Buttons at Bottom
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      _buildActionButton(
-                        icon: Icons.edit_rounded,
-                        color: Colors.blue,
-                        onPressed: () => _handleEditUser(user),
-                        tooltip: 'Edit User',
+                      // View Details Button
+                      OutlinedButton(
+                        onPressed: () => _showUserDetails(context, user),
+                        style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          side: BorderSide(color: Colors.grey[300]!),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                        ),
+                        child: Text(
+                          'View Details',
+                          style: TextStyle(
+                            color: Colors.grey[700],
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
-                      const SizedBox(width: 8),
-                      _buildActionButton(
-                        icon: Icons.delete_rounded,
-                        color: Colors.red,
+                      const SizedBox(width: 12),
+                      
+                      // Edit Button
+                      ElevatedButton(
+                        onPressed: () => _handleEditUser(user),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue[700],
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.edit_rounded, size: 16),
+                            SizedBox(width: 6),
+                            Text(
+                              'Edit',
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      
+                      // Delete Button
+                      ElevatedButton(
                         onPressed: () => _handleDeleteUser(user),
-                        tooltip: 'Delete User',
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red[700],
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.delete_rounded, size: 16),
+                            SizedBox(width: 6),
+                            Text(
+                              'Delete',
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -619,36 +679,6 @@ class _UserListState extends State<UserList> {
     );
   }
 
-  Widget _buildActionButton({
-    required IconData icon,
-    required Color color,
-    required VoidCallback onPressed,
-    required String tooltip,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: color.withOpacity(0.2),
-            blurRadius: 8,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: IconButton(
-        onPressed: onPressed,
-        icon: Icon(icon, size: 20),
-        color: color,
-        splashRadius: 20,
-        tooltip: tooltip,
-        padding: const EdgeInsets.all(8),
-        constraints: const BoxConstraints(),
-      ),
-    );
-  }
-
   void _showUserDetails(BuildContext context, User user) {
     showModalBottomSheet(
       context: context,
@@ -664,77 +694,80 @@ class _UserListState extends State<UserList> {
           ),
         ),
         padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 60,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(2),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 60,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(2),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Center(
-              child: Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: user.isActive
-                        ? [Colors.blue[700]!, Colors.purple[600]!]
-                        : [Colors.grey[600]!, Colors.grey[400]!],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+              const SizedBox(height: 20),
+              Center(
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: user.isActive
+                          ? [Colors.blue[700]!, Colors.purple[600]!]
+                          : [Colors.grey[600]!, Colors.grey[400]!],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                  child: Text(
-                    user.name[0].toUpperCase(),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
+                  child: Center(
+                    child: Text(
+                      user.name[0].toUpperCase(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Center(
-              child: Text(
-                user.name,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+              const SizedBox(height: 20),
+              Center(
+                child: Text(
+                  user.name,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Center(
-              child: Text(
-                user.email,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[600],
+              const SizedBox(height: 8),
+              Center(
+                child: Text(
+                  user.email,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 24),
-            _buildDetailItem(Icons.transgender_rounded, 'Gender', user.gender),
-            _buildDetailItem(Icons.cake_rounded, 'Age', '${user.age} years'),
-            _buildDetailItem(Icons.calendar_today_rounded, 'Date of Birth', user.dob),
-            _buildDetailItem(
-              user.isActive ? Icons.check_circle : Icons.cancel,
-              'Status',
-              user.isActive ? 'Active' : 'Inactive',
-              color: user.isActive ? Colors.green : Colors.red,
-            ),
-          ],
+              const SizedBox(height: 24),
+              _buildDetailItem(Icons.transgender_rounded, 'Gender', user.gender),
+              _buildDetailItem(Icons.cake_rounded, 'Age', '${user.age} years'),
+              _buildDetailItem(Icons.calendar_today_rounded, 'Date of Birth', user.dob),
+              _buildDetailItem(
+                user.isActive ? Icons.check_circle : Icons.cancel,
+                'Status',
+                user.isActive ? 'Active' : 'Inactive',
+                color: user.isActive ? Colors.green : Colors.red,
+              ),
+            ],
+          ),
         ),
       ),
     );
