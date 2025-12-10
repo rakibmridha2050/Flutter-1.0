@@ -1,5 +1,6 @@
 import 'package:app_flutter/crudsqllite/screens/user_list.dart';
 import 'package:app_flutter/home_page.dart';
+import 'package:app_flutter/liquid_swipe.dart';
 import 'package:app_flutter/page1.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       darkTheme: ThemeData(primarySwatch: Colors.deepPurple),
       // home: Youtude(),
-      home: UserList(),
+      home: PracticeN8(),
     );
   }
 }
